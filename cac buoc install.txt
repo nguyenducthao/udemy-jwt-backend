@@ -47,7 +47,7 @@ tạo file src/configs/viewEngine.js với nội dung sau:
     const configViewEngine = (app) => {
         app.use(express.static('./src/public')) //cho phép trình duyệt truy cập vào folder public
         app.set("view engine", "ejs") // dịch ejs thành html
-        app.set("views", ".src/views") // thư mục chứa các tập tin hiển thị trên trình duyệt
+        app.set("views", "./src/views") // thư mục chứa các tập tin hiển thị trên trình duyệt
     }
 
     export default configViewEngine
@@ -89,3 +89,49 @@ thêm vào file .env nội dung sau:
 sửa file server.js với nội dung sau:
     thêm: require("dotenv").config
     sửa const PORT = 8080 thành const PORT = process.env.PORT || 8080
+
+sửa file web.js với nội dung sau:
+    tạo hàm handleHelloWord trước hàm initWebRoutes với nội dung:
+        const handleHelloWord=(req,res)=>{
+            return res.send("Hello word")
+        }
+    sửa đoạn code: 
+        router.get("/", (req, res) => {
+            return res.send("Hello world")
+            })
+        thành:
+             router.get("/", handleHelloWord)
+
+tạo file controllers/homeController.js với nội dung sau:
+    cắt và dán hàm handleHelloWord trong file web.js vào file này
+    thêm đoạn code sau:
+        module.exports = {
+            handleHelloWord
+        }
+
+mở file web.js, thêm vào dòng sau:
+    import homeController from './/../controllers/homeController'
+
+mở file web.js:
+    sửa: router.get("/", handleHelloWord)
+    thành: router.get("/", homeController.handleHelloWord)
+
+tạo file views/home.ejs với nội dung sau:
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <h1>Hello word from ejs view</h1>
+    </body>
+
+    </html>
+
+mở file homeController.js:
+    sửa: return res.send("Hello word")
+    thành: return res.render("home.ejs")
