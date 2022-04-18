@@ -135,3 +135,26 @@ tạo file views/home.ejs với nội dung sau:
 mở file homeController.js:
     sửa: return res.send("Hello word")
     thành: return res.render("home.ejs")
+
+npm install --save-exact mysql2@2.3.3
+
+npm install --save-exact bcryptjs@2.4.3
+
+npm install --save-exact body-parser@1.19.1
+
+mở file server.js:
+    thêm dòng: import bodyParser from "body-parser"
+    thêm sau dòng configViewEngine(app):
+        //config body-parser middleware
+        app.use(bodyParser.json())
+        app.use(bodyParser.urlencoded({ extended: true }))
+
+thêm vào đầu file homeController.js:
+    import mysql from "mysql2"
+    const connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'udemy-jwt-backend'
+    })
+
