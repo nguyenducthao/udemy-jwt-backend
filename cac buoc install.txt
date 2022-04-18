@@ -1,0 +1,91 @@
+npm install --save-exact express@4.17.2 dotenv@10.0.0 body-parser@1.19.1 ejs@3.1.6
+
+tạo folder src
+
+tạo file server.js trong thư mục src
+
+tạo folder configs trong thư mục src
+
+tạo folder controllers trong thư mục src
+
+tạo folder services trong thư mục src
+
+tạo folder public trong thư mục src
+
+tạo folder views trong thư mục src
+
+tạo folder models trong thư mục src
+
+tạo folder routes trong thư mục src
+
+tạo file .gitignore và thêm vào nội dung:
+
+tạo file .babelrc
+
+tạo file .env
+
+thêm vào file .gitignore nội dung:
+    .evn
+    node_modules
+    node_modules/*
+
+npm install --save-exact @babel/core@7.15.4 @babel/node@7.15.4 @babel/preset-env@7.15.4 nodemon@2.0.15
+
+thêm vào file .babelrc nội dung:
+    {
+        "presets":[
+            "@babel/preset-env"
+        ]
+    }
+
+tạo file src/configs/viewEngine.js với nội dung sau:
+    import express from "express"
+    /**
+    * 
+    * @param {*} app: express app
+    */
+    const configViewEngine = (app) => {
+        app.use(express.static('./src/public')) //cho phép trình duyệt truy cập vào folder public
+        app.set("view engine", "ejs") // dịch ejs thành html
+        app.set("views", ".src/views") // thư mục chứa các tập tin hiển thị trên trình duyệt
+    }
+
+    export default configViewEngine
+
+tạo file src/routes/web.js với nội dung sau:
+    import express from "express";
+    import { append } from "express/lib/response";
+    const router = express.Router()
+    const initWebRoutes = (app) => {
+        router.get("/", (req, res) => {
+            return res.send("Hello world")
+        })
+        return app.use("/", router)
+    }
+    export default initWebRoutes
+
+thêm vào file server.js nội dung:
+    import express from "express";
+    import configViewEngine from "./configs/viewEngine";
+    import initWebRoutes from "./routes/web";
+    const app = express()
+    configViewEngine(app)
+    initWebRoutes(app)
+    const PORT = 8080
+    app.listen(PORT, () => {
+        console.log('>>> JWT Backend is running on the port = ', PORT)
+    })
+
+thêm vào file package.json trong thẻ "script" nội dung sau:
+    "start": "nodemon --exec babel-node src/server.js"
+
+gõ lệnh npm start trong terminal để chạy server
+
+mở trình duyệt, vào địa chỉ localhost:8080
+
+thêm vào file .env nội dung sau:
+    PORT = 8080
+
+sửa file server.js với nội dung sau:
+    thêm: require("dotenv").config
+    sửa const PORT = 8080 thành const PORT = process.env.PORT || 8080
