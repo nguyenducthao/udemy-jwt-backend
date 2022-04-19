@@ -159,3 +159,19 @@ thêm vào đầu file homeController.js:
     })
 
 npm install --save-exact bluebird@3.7.2
+
+npm install --save-exact sequelize@6.13.0 sequelize-cli@6.3.0
+
+đổi tên thư mục src/configs thành src/config
+
+tạo file .sequelizerc với nội dung sau:
+    const path = require('path');
+    module.exports = {
+        'config': path.resolve('./src/config', 'config.json'),
+        'migrations-path': path.resolve('./src/migrations', 'migrations'),
+        'models-path': path.resolve('./src/models', 'models'),
+        'seeders-path': path.resolve('./src/seeders', 'seeders')
+    }
+
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau:
+    node_modules/.bin/sequelize init
