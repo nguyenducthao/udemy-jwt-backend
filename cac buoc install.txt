@@ -158,3 +158,4 @@ thêm vào đầu file homeController.js:
         database: 'udemy-jwt-backend'
     })
 
+npm install --save-exact bluebird@3.7.2
