@@ -49,6 +49,18 @@ const getUserList = async () => {
     const [rows, fields] = await connection.execute('SELECT * FROM users')
     return rows
 }
+const getUserById = async (id) => {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'udemy-jwt-backend',
+        Promise: bluebird
+    });
+
+    const [rows, fields] = await connection.execute('SELECT * FROM users where id=?', [id])
+    return rows
+}
 const getUserByEmail = async (email) => {
     const connection = await mysql.createConnection({
         host: 'localhost',
@@ -61,6 +73,30 @@ const getUserByEmail = async (email) => {
     const [rows, fields] = await connection.execute('SELECT * FROM users where email=?', [email])
     return rows
 }
+const getUserByUserName = async (username) => {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'udemy-jwt-backend',
+        Promise: bluebird
+    });
+
+    const [rows, fields] = await connection.execute('SELECT * FROM users where username=?', [username])
+    return rows
+}
+const getUserByEmailAndUserName = async (email, username) => {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'udemy-jwt-backend',
+        Promise: bluebird
+    });
+
+    const [rows, fields] = await connection.execute('SELECT * FROM users where email=? and username=?', [email, username])
+    return rows
+}
 const deleteUser = async (id) => {
     const connection = await mysql.createConnection({
         host: 'localhost',
@@ -71,9 +107,23 @@ const deleteUser = async (id) => {
     });
     await connection.execute('delete FROM users where id=?', [id])
 }
+const updateUser = async (id, email, username) => {
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'udemy-jwt-backend',
+        Promise: bluebird
+    });
+    await connection.execute('update users set email=?, username=? where id=?', [email, username, id])
+}
 module.exports = {
     createNewUser,
     getUserList,
+    getUserById,
     getUserByEmail,
-    deleteUser
+    getUserByUserName,
+    getUserByEmailAndUserName,
+    deleteUser,
+    updateUser
 }
