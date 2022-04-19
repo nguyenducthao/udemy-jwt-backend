@@ -87,7 +87,7 @@ thêm vào file .env nội dung sau:
     PORT = 8080
 
 sửa file server.js với nội dung sau:
-    thêm: require("dotenv").config
+    thêm: require("dotenv").config()
     sửa const PORT = 8080 thành const PORT = process.env.PORT || 8080
 
 sửa file web.js với nội dung sau:

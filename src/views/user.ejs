@@ -64,7 +64,12 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-warning">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <form method="post" action="/users/delete-user/<%=item.id%>"
+                                        style="display: inline;">
+                                        <button class="btn btn-danger" type="submit">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             <% }) %>
