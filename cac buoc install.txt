@@ -214,3 +214,23 @@ sửa file src/seeders/xxx-demo-user.js (trong hàm up) theo cấu trúc của t
 
 mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để tạo dữ liệu fake (ghi xxx-demo-user.js vào database):
     npx sequelize-cli db:seed:all
+
+thêm dòng sau vào đầu file userService.js để kết nối database thông qua biến db trong file src/models/index.js:
+    import db from '../models/index'
+
+sửa hàm createNewUser trong file userService.js với nội dung sau để sử dụng sequelize ghi vào database:
+    const createNewUser = async (email, password, username) => {
+        try {
+            let hashPass = hashUserPassword(password)
+            await db.User.create({
+                email: email,
+                password: password,
+                username: username
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+nếu muốn ko hiển thị câu lệnh được thực thi của sequelize tại terminal thì thêm dòng lệnh sau vào file src/config/config.json:
+    "logging":false

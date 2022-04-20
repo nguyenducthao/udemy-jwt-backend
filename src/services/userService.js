@@ -2,6 +2,7 @@ require("dotenv").config()
 import mysql from "mysql2/promise"
 import bcrypt from "bcryptjs"
 import bluebird from 'bluebird'
+import db from '../models/index'
 
 // const connection = mysql.createConnection({
 //     host: 'localhost',
@@ -29,14 +30,19 @@ const createNewUser = async (email, password, username) => {
         //             console.log(err)
         //     }
         // )
-        const connection = await mysql.createConnection({
-            host: DB_HOST,
-            user: DB_USER,
-            password: DB_PASSWORD,
-            database: DB_DATABASE,
-            Promise: bluebird
-        });
-        await connection.execute('insert into users (email,password,username) values (?,?,?)', [email, hashPass, username])
+        // const connection = await mysql.createConnection({
+        //     host: DB_HOST,
+        //     user: DB_USER,
+        //     password: DB_PASSWORD,
+        //     database: DB_DATABASE,
+        //     Promise: bluebird
+        // });
+        // await connection.execute('insert into users (email,password,username) values (?,?,?)', [email, hashPass, username])
+        await db.User.create({
+            email: email,
+            password: password,
+            username: username
+        })
     } catch (e) {
         console.log(e)
     }
