@@ -48,28 +48,38 @@ const createNewUser = async (email, password, username) => {
     }
 }
 const getUserList = async () => {
-    const connection = await mysql.createConnection({
-        host: DB_HOST,
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: DB_DATABASE,
-        Promise: bluebird
-    });
+    // const connection = await mysql.createConnection({
+    //     host: DB_HOST,
+    //     user: DB_USER,
+    //     password: DB_PASSWORD,
+    //     database: DB_DATABASE,
+    //     Promise: bluebird
+    // });
 
-    const [rows, fields] = await connection.execute('SELECT * FROM users')
-    return rows
+    // const [rows, fields] = await connection.execute('SELECT * FROM users')
+    // return rows
+    let users = []
+    users = await db.User.findAll()
+    return users
 }
 const getUserById = async (id) => {
-    const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'udemy-jwt-backend',
-        Promise: bluebird
-    });
+    // const connection = await mysql.createConnection({
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: 'root',
+    //     database: 'udemy-jwt-backend',
+    //     Promise: bluebird
+    // });
 
-    const [rows, fields] = await connection.execute('SELECT * FROM users where id=?', [id])
-    return rows
+    // const [rows, fields] = await connection.execute('SELECT * FROM users where id=?', [id])
+    // return rows
+    let user = {}
+    user = await db.User.findOne({
+        where: {
+            id: id
+        }
+    })
+    return user
 }
 const getUserByEmail = async (email) => {
     const connection = await mysql.createConnection({
@@ -108,24 +118,39 @@ const getUserByEmailAndUserName = async (email, username) => {
     return rows
 }
 const deleteUser = async (id) => {
-    const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'udemy-jwt-backend',
-        Promise: bluebird
-    });
-    await connection.execute('delete FROM users where id=?', [id])
+    // const connection = await mysql.createConnection({
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: 'root',
+    //     database: 'udemy-jwt-backend',
+    //     Promise: bluebird
+    // });
+    // await connection.execute('delete FROM users where id=?', [id])
+    await db.User.destroy({
+        where: {
+            id: id
+        }
+    })
 }
 const updateUser = async (id, email, username) => {
-    const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database: 'udemy-jwt-backend',
-        Promise: bluebird
-    });
-    await connection.execute('update users set email=?, username=? where id=?', [email, username, id])
+    // const connection = await mysql.createConnection({
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: 'root',
+    //     database: 'udemy-jwt-backend',
+    //     Promise: bluebird
+    // });
+    // await connection.execute('update users set email=?, username=? where id=?', [email, username, id])
+    await db.User.update(
+        {
+            email: email,
+            username: username
+        },
+        {
+            where: {
+                id: id
+            }
+        })
 }
 module.exports = {
     createNewUser,

@@ -234,3 +234,12 @@ sửa hàm createNewUser trong file userService.js với nội dung sau để s�
 
 nếu muốn ko hiển thị câu lệnh được thực thi của sequelize tại terminal thì thêm dòng lệnh sau vào file src/config/config.json:
     "logging":false
+
+sửa hàm deleteUser trong file userService.js với nội dung sau để sử dụng sequelize xóa 1 dòng vào database:
+    const deleteUser = async (id) => {
+        await db.User.destroy({
+            where: {
+                id: id
+            }
+        })
+    }
