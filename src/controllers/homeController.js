@@ -13,11 +13,6 @@ const handleUserPage = async (req, res) => {
 
 }
 const handleCreateNewUser = async (req, res) => {
-    let getUserByEmail = await userService.getUserByEmail('admin@gmail.com')
-    if (getUserByEmail) {
-        alert('This email is exist')
-        return
-    }
     let email = req.body.email
     let password = req.body.password
     let username = req.body.username

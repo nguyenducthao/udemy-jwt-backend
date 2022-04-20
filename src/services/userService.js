@@ -20,22 +20,26 @@ const hashUserPassword = (password) => {
 }
 
 const createNewUser = async (email, password, username) => {
-    let hashPass = hashUserPassword(password)
-    // connection.query(
-    //     'insert into users (email,password,username) values (?,?,?)', [email, hashPass, username],
-    //     function (err, result, fields) {
-    //         if (err)
-    //             console.log(err)
-    //     }
-    // )
-    const connection = await mysql.createConnection({
-        host: DB_HOST,
-        user: DB_USER,
-        password: DB_PASSWORD,
-        database: DB_DATABASE,
-        Promise: bluebird
-    });
-    await connection.execute('insert into users (email,password,username) values (?,?,?)', [email, hashPass, username])
+    try {
+        let hashPass = hashUserPassword(password)
+        // connection.query(
+        //     'insert into users (email,password,username) values (?,?,?)', [email, hashPass, username],
+        //     function (err, result, fields) {
+        //         if (err)
+        //             console.log(err)
+        //     }
+        // )
+        const connection = await mysql.createConnection({
+            host: DB_HOST,
+            user: DB_USER,
+            password: DB_PASSWORD,
+            database: DB_DATABASE,
+            Promise: bluebird
+        });
+        await connection.execute('insert into users (email,password,username) values (?,?,?)', [email, hashPass, username])
+    } catch (e) {
+        console.log(e)
+    }
 }
 const getUserList = async () => {
     const connection = await mysql.createConnection({

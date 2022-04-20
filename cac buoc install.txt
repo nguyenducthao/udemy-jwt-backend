@@ -168,10 +168,49 @@ tạo file .sequelizerc với nội dung sau:
     const path = require('path');
     module.exports = {
         'config': path.resolve('./src/config', 'config.json'),
-        'migrations-path': path.resolve('./src/migrations', 'migrations'),
-        'models-path': path.resolve('./src/models', 'models'),
-        'seeders-path': path.resolve('./src/seeders', 'seeders')
+        'migrations-path': path.resolve('./src', 'migrations'),
+        'models-path': path.resolve('./src', 'models'),
+        'seeders-path': path.resolve('./src', 'seeders')
     }
 
-mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau:
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để khởi tạo sequelize:
     node_modules/.bin/sequelize init
+
+tạo file src/config/connectDB.js với nội dung sau:
+    const { Sequelize } = require('sequelize');
+
+    const sequelize = new Sequelize('udemy-jwt-backend', 'root', 'root', {
+        host: 'localhost',
+        dialect: 'mysql'
+    });
+
+    const connection = async () => {
+        try {
+            await sequelize.authenticate();
+            console.log('Connection has been established successfully.');
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
+        }
+    }
+    export default connection
+
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để khởi tạo model:
+    npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+xóa table users trong database
+
+sửa file src/models/user.js theo cấu trúc của table users đã xóa - phần User.init (ko cần thêm trường id)
+
+sửa file src/migrations/xxx-create-user.js theo cấu trúc của table users đã xóa (ko cần thêm trường id)
+
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để tạo table trong database (ghi model vào database):
+    npx sequelize-cli db:migrate
+
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để tạo dữ liệu fake (dữ liệu mẫu - nếu cần thiết):
+    npx sequelize-cli seed:generate --name demo-user
+
+
+sửa file src/seeders/xxx-demo-user.js (trong hàm up) theo cấu trúc của table users đã xóa để chuẩn bị tạo dữ liệu fake
+
+mở Git Bash Here tại thư mục của project và chạy dòng lệnh sau để tạo dữ liệu fake (ghi xxx-demo-user.js vào database):
+    npx sequelize-cli db:seed:all
