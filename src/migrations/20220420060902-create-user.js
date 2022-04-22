@@ -26,7 +26,7 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      group_id: {
+      groupId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

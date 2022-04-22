@@ -40,7 +40,7 @@ const createNewUser = async (email, password, username) => {
         // await connection.execute('insert into users (email,password,username) values (?,?,?)', [email, hashPass, username])
         await db.User.create({
             email: email,
-            password: password,
+            password: hashPass,
             username: username
         })
     } catch (e) {
@@ -48,6 +48,35 @@ const createNewUser = async (email, password, username) => {
     }
 }
 const getUserList = async () => {
+    //test relationship
+    let newUser = await db.User.findOne({
+        where: { id: 1 },
+        attributes: ["id", "username", "email"],
+        include: { model: db.Group, attributes: ["name", "description",] },
+        raw: true,
+        nest: true
+    })
+
+    // let roles = await db.Group.findOne({
+    //     where: { id: 1 },
+    //     include: { model: db.Role },
+    //     raw: true,
+    //     nest: true
+    // })
+
+    let roles = await db.Role.findAll({
+        include: { model: db.Group, where: { id: 1 } },
+        attributes: ["url", "description"],
+        raw: true,
+        nest: true
+    })
+
+    console.log('check new user: ', newUser)
+    console.log('check new role: ', roles)
+
+
+
+
     // const connection = await mysql.createConnection({
     //     host: DB_HOST,
     //     user: DB_USER,
