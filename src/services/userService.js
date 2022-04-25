@@ -109,6 +109,7 @@ const getUserById = async (id) => {
         }
     })
     return user
+    // return user.get({ plain: true })
 }
 const getUserByEmail = async (email) => {
     const connection = await mysql.createConnection({
