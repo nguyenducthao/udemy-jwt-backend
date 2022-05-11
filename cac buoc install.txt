@@ -243,3 +243,11 @@ sửa hàm deleteUser trong file userService.js với nội dung sau để sử 
             }
         })
     }
+
+npm install --save-exact jsonwebtoken@8.5.1 cookie-parser@1.4.6
+
+tạo file src/middleware/JWTAction.js
+
+thêm vào file .env
+    JWT_SECRET = ndthaodng@gmail.com
+
