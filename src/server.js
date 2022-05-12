@@ -7,7 +7,6 @@ import bodyParser from "body-parser"
 import connection from "./config/connectDB";
 import configCors from "./config/cors";
 const app = express()
-import { createJWT, verifyToken } from './middleware/JWTAction'
 
 configViewEngine(app)
 //config CORS
@@ -16,9 +15,6 @@ configCors(app)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 connection()
-createJWT()
-let decodedData = verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmd1eeG7hW4gxJHhu6ljIHRo4bqjbyIsImVtYWlsIjoibmR0aGFvZG5nQGdtYWlsLmNvbSIsImlhdCI6MTY1MjI3MTMxMX0.YxKCeNALQS9p1eKFTU9zorNGyXMqA2tRE3crWtSfAQE')
-console.log('decodedData: ', decodedData)
 initWebRoutes(app)
 initApiRoutes(app)
 const PORT = process.env.PORT || 8080
