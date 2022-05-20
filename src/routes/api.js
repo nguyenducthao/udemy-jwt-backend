@@ -10,6 +10,7 @@ const initApiRoutes = (app) => {
     router.all('*', checkUserJWT, checkUserPermission)
     router.post("/register", apiController.handleRegister)
     router.post("/login", apiController.handleLogin)
+    router.post("/logout", apiController.handleLogout)
     router.get('/account', userController.getUserAccount)
     router.get("/users/read", userController.readFunc)
     // router.get("/users/read/?page=?&limit=?", userController.readFunc)
