@@ -251,3 +251,5 @@ tạo file src/middleware/JWTAction.js
 thêm vào file .env
     JWT_SECRET = ndthaodng@gmail.com
 
+npm install --save-exact lodash@4.17.21
+
