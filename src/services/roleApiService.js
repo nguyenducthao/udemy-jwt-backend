@@ -29,6 +29,50 @@ const createNewRoles = async (roles) => {
         }
     }
 }
+const getAllRoles = async () => {
+    try {
+        let data = await db.Role.findAll({
+            order: [['id', 'DESC']]
+        })
+        return {
+            EM: `Get all Roles succeeds`,
+            EC: 0,
+            DT: data
+        }
+    } catch (e) {
+        console.log(e)
+        return {
+            EM: 'Something wrongs with services',
+            EC: 1,
+            DT: []
+        }
+    }
+}
+const deleteRole = async (id) => {
+    try {
+        let role = await db.Role.findOne({
+            where: { id: id }
+        })
+        if (role) {
+            await role.destroy()
+        }
+
+        return {
+            EM: `Delete Role succeeds`,
+            EC: 0,
+            DT: []
+        }
+    } catch (e) {
+        console.log(e)
+        return {
+            EM: 'Something wrongs with services',
+            EC: 1,
+            DT: []
+        }
+    }
+}
 module.exports = {
-    createNewRoles
+    createNewRoles,
+    getAllRoles,
+    deleteRole
 }
