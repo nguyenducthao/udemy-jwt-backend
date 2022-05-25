@@ -8,7 +8,7 @@ const getGroupWithRoles = async (user) => {
             model: db.Role,
             attributes: ['id', 'url', 'description'],
             through: { attributes: [] }
-        },
+        }
     })
     return roles ? roles : {}
 }
